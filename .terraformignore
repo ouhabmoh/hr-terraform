@@ -1,0 +1,13 @@
+# Ignore all files ending with .tmp
+*.tmp
+
+# Ignore all .txt files in the docs directory
+docs/*.txt
+
+# Ignore all files in the temp directory
+temp/*
+
+# Ignore the .git directory
+.git
+
+*.md
