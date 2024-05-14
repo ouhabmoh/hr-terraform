@@ -134,6 +134,14 @@ jobs:
                - name: Setup Terraform
                  uses: hashicorp/setup-terraform@v2
 
+               - name: Configure AWS credentials
+                 id: aws-credentials
+                 uses: aws-actions/configure-aws-credentials@v1-node16
+                 with:
+                      # Use GitHub OIDC provider
+                      role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+                      aws-region: ${{ secrets.AWS_REGION }}
+
                # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
                - name: Terraform Init
                  run: terraform init
