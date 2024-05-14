@@ -5,10 +5,11 @@
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.15.1"
+  version = "20.10.0"
 
-  cluster_name                   = local.name
-  cluster_endpoint_public_access = true
+  cluster_name                             = local.name
+  cluster_endpoint_public_access           = true
+  enable_cluster_creator_admin_permissions = true
 
   cluster_addons = {
     coredns = {
@@ -43,6 +44,12 @@ module "eks" {
       instance_types = ["t3.micro"]
 
 
+      iam_role_additional_policies = {
+        AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+        ecr_policy                         = aws_iam_policy.node_ecr_policy
+        additional                         = aws_iam_policy.node_additional.arn
+      }
+
       tags = {
         name = local.name
       }
@@ -50,4 +57,50 @@ module "eks" {
   }
 
   tags = local.tags
+}
+
+
+resource "aws_iam_policy" "node_additional" {
+  name        = "${local.name}-additional"
+  description = "Example usage of node additional policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "ec2:Describe*",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+
+
+
+  tags = local.tags
+}
+
+resource "aws_iam_policy" "node_ecr_policy" {
+  name        = "${local.name}-ecr-policy"
+  description = "Example usage of node additional policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:GetAuthorizationToken",
+          "ecr:DescribeImages",
+          "ecr:DescribeRepositories"
+        ],
+        "Resource" : "*"
+      }
+    ]
+  })
 }
