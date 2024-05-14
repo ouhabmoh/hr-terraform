@@ -90,7 +90,7 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
-  
+
     instance_types = ["t3.micro"]
 
     attach_cluster_primary_security_group = true
@@ -98,12 +98,12 @@ module "eks" {
 
   eks_managed_node_groups = {
     ascode-cluster-wg = {
-     min_size       = 1
-      max_size       = 3
-      desired_size   = 2
+      min_size     = 1
+      max_size     = 3
+      desired_size = 2
 
       instance_types = ["t3.micro"]
-     
+
 
       tags = {
         name = local.name
