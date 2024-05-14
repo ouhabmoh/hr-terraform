@@ -97,7 +97,7 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    ascode-cluster-wg = {
+    hr-ld-cluster-wg = {
       min_size     = 1
       max_size     = 3
       desired_size = 2
