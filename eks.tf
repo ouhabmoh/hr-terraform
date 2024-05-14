@@ -46,7 +46,7 @@ module "eks" {
 
       iam_role_additional_policies = {
         AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-        ecr_policy                         = aws_iam_policy.node_ecr_policy
+        ecr_policy                         = aws_iam_policy.node_ecr_policy.arn
         additional                         = aws_iam_policy.node_additional.arn
       }
 
