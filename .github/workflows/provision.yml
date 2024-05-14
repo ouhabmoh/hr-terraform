@@ -125,10 +125,6 @@ jobs:
           environment: development
           needs: [terraform-plan]
 
-          defaults:
-               run:
-                    working-directory: ./dev
-
           steps:
                # Checkout the repository to the GitHub Actions runner
                - name: Checkout
