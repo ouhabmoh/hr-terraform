@@ -154,4 +154,4 @@ jobs:
 
                # Terraform Apply
                - name: Terraform Apply
-                 run: terraform destroy
+                 run: terraform destroy -auto-approve
