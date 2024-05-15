@@ -226,7 +226,7 @@
               "ecr:DescribeRepositories"
             ],
             "Resource" : "*"
-          }
+          },
           {
             "Effect": "Allow",
             "Action": [
